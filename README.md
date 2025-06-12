@@ -7,6 +7,8 @@ This Streamlit web application helps users:
 - Evaluate how compatible their resume or skills are with the job description.
 - Generate a downloadable PDF report containing fraud prediction, skill match analysis, and TF-IDF skill comparisons.
 
+Streamlit deployed link: https://job-fraud-detection-and-compatibility-checker.streamlit.app
+
 ## 🔍 Features
 
 - ✅ **Fraud Detection** using a Logistic Regression model trained on the Kaggle Fake Job Postings dataset.
