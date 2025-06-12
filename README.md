@@ -20,13 +20,15 @@ This Streamlit web application helps users:
 
 ## 🗂️ Directory Structure
 
+```
 📁 Job_Fraud_detection_Compatibility_Checker/
 │
-├── app.py # Main Streamlit app
-├── fake_job_postings.csv # Dataset used for training
-├── requirements.txt # Python dependencies
-├── report.pdf # (Optional) Example generated report
-└── README.md # This file
+├── app.py                   # Main Streamlit app
+├── fake_job_postings.csv   # Dataset used for training
+├── requirements.txt        # Python dependencies
+├── report.pdf              # (Optional) Example generated report
+└── README.md               # Project documentation (this file)
+```
 
 ---
 
