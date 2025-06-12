@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 from fpdf import FPDF
 import base64
 import os
@@ -38,12 +40,17 @@ def train_model():
     X = vectorizer.fit_transform(data["text"])
     y = data["fraudulent"]
 
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
     model = LogisticRegression(max_iter=1000)
-    model.fit(X, y)
+    model.fit(X_train, y_train)
 
-    return model, vectorizer
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
 
-model, vectorizer = train_model()
+    return model, vectorizer, accuracy
+
+model, vectorizer, accuracy = train_model()
 
 # -------------------------
 # Streamlit UI
@@ -51,6 +58,8 @@ model, vectorizer = train_model()
 st.title("🕵️ Job Post Fraud Detection + 🎯 Compatibility Checker")
 
 st.markdown("Upload your resume or enter skills manually to check compatibility with a job post and predict fraud risk.")
+
+st.markdown(f"📈 **Fraud Detection Model Accuracy:** `{accuracy * 100:.2f}%`")
 
 title = st.text_input("Job Title")
 description = st.text_area("Job Description")
@@ -77,6 +86,8 @@ def generate_report(title, description, fraud_prob, sim, top_resume, top_job, ma
     pdf.set_font("Arial", 'B', 16)
     pdf.cell(0, 12, "Job Post Fraud Detection & Compatibility Report", ln=True, align='C', fill=True)
     pdf.ln(8)
+    pdf.cell(0, 10, f"Model Accuracy: {accuracy * 100:.2f}%", ln=True)
+
 
     # Reset text settings
     pdf.set_text_color(0, 0, 0)
